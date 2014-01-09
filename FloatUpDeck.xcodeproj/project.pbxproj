@@ -21,6 +21,9 @@
 		80245A9F187CDC50004DF4BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80245A81187CDC50004DF4BB /* UIKit.framework */; };
 		80245AA7187CDC50004DF4BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80245AA5187CDC50004DF4BB /* InfoPlist.strings */; };
 		80245AA9187CDC50004DF4BB /* FloatUpDeckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80245AA8187CDC50004DF4BB /* FloatUpDeckTests.m */; };
+		80245AB4187CDC8E004DF4BB /* FloatUpDeckTransitionInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 80245AB3187CDC8E004DF4BB /* FloatUpDeckTransitionInspector.m */; };
+		80245AB8187D041A004DF4BB /* ToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80245AB6187D041A004DF4BB /* ToViewController.m */; };
+		80245AB9187D041A004DF4BB /* ToViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80245AB7187D041A004DF4BB /* ToViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,11 @@
 		80245AA4187CDC50004DF4BB /* FloatUpDeckTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FloatUpDeckTests-Info.plist"; sourceTree = "<group>"; };
 		80245AA6187CDC50004DF4BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		80245AA8187CDC50004DF4BB /* FloatUpDeckTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloatUpDeckTests.m; sourceTree = "<group>"; };
+		80245AB2187CDC8E004DF4BB /* FloatUpDeckTransitionInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatUpDeckTransitionInspector.h; sourceTree = "<group>"; };
+		80245AB3187CDC8E004DF4BB /* FloatUpDeckTransitionInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatUpDeckTransitionInspector.m; sourceTree = "<group>"; };
+		80245AB5187D041A004DF4BB /* ToViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToViewController.h; sourceTree = "<group>"; };
+		80245AB6187D041A004DF4BB /* ToViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToViewController.m; sourceTree = "<group>"; };
+		80245AB7187D041A004DF4BB /* ToViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +125,11 @@
 				80245A8F187CDC50004DF4BB /* Main.storyboard */,
 				80245A92187CDC50004DF4BB /* ViewController.h */,
 				80245A93187CDC50004DF4BB /* ViewController.m */,
+				80245AB5187D041A004DF4BB /* ToViewController.h */,
+				80245AB6187D041A004DF4BB /* ToViewController.m */,
+				80245AB7187D041A004DF4BB /* ToViewController.xib */,
+				80245AB2187CDC8E004DF4BB /* FloatUpDeckTransitionInspector.h */,
+				80245AB3187CDC8E004DF4BB /* FloatUpDeckTransitionInspector.m */,
 				80245A95187CDC50004DF4BB /* Images.xcassets */,
 				80245A84187CDC50004DF4BB /* Supporting Files */,
 			);
@@ -231,6 +244,7 @@
 				80245A96187CDC50004DF4BB /* Images.xcassets in Resources */,
 				80245A88187CDC50004DF4BB /* InfoPlist.strings in Resources */,
 				80245A91187CDC50004DF4BB /* Main.storyboard in Resources */,
+				80245AB9187D041A004DF4BB /* ToViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,8 +263,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80245AB8187D041A004DF4BB /* ToViewController.m in Sources */,
 				80245A94187CDC50004DF4BB /* ViewController.m in Sources */,
 				80245A8E187CDC50004DF4BB /* AppDelegate.m in Sources */,
+				80245AB4187CDC8E004DF4BB /* FloatUpDeckTransitionInspector.m in Sources */,
 				80245A8A187CDC50004DF4BB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
