@@ -17,6 +17,8 @@
 @property (nonatomic, assign) CGFloat startLocation;
 @end
 
+static const CGFloat rotationDegree = 20.0f;
+
 @implementation FloatUpDeckTransitionInspector {
   CGFloat _currentShadowOpacity;
 }
@@ -30,6 +32,26 @@
     self.presenting = NO;
   }
   return self;
+}
+
+- (void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view
+{
+  CGPoint newPoint = CGPointMake(view.bounds.size.width * anchorPoint.x, view.bounds.size.height * anchorPoint.y);
+  CGPoint oldPoint = CGPointMake(view.bounds.size.width * view.layer.anchorPoint.x, view.bounds.size.height * view.layer.anchorPoint.y);
+  
+  newPoint = CGPointApplyAffineTransform(newPoint, view.transform);
+  oldPoint = CGPointApplyAffineTransform(oldPoint, view.transform);
+  
+  CGPoint position = view.layer.position;
+  
+  position.x -= oldPoint.x;
+  position.x += newPoint.x;
+  
+  position.y -= oldPoint.y;
+  position.y += newPoint.y;
+  
+  view.layer.position = position;
+  view.layer.anchorPoint = anchorPoint;
 }
 
 #pragma mark - PanGesturesRecognizer
@@ -74,15 +96,19 @@
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator {
+
   if (self.interactive)
     return self;
   return nil;
+
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator {
+
   if (self.interactive)
     return self;
   return nil;
+
 }
 
 - (CATransform3D) transformForRotationDegree:(CGFloat)degree {
@@ -96,7 +122,9 @@
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 - (NSTimeInterval) transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+  
   return 0.5f;
+
 }
 
 - (void) animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -148,9 +176,7 @@
     toViewController.view.layer.shadowOffset = CGSizeMake(0, 100);
     
     // init the second view controller's frame, it should be on the screen before dismiss
-    CGRect fromFrame = frame;
-    fromFrame.origin.y += CGRectGetHeight(frame);
-    fromViewController.view.frame = frame;
+    [self setAnchorPoint:CGPointMake(0.5, 1.0) forView:fromViewController.view];
   
     __weak FloatUpDeckTransitionInspector *wSelf = self;
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
@@ -158,13 +184,13 @@
 
                        toViewController.view.frame = frame;
                        
-                       fromViewController.view.layer.transform = [wSelf transformForRotationDegree:15];
-                       fromViewController.view.frame = fromFrame;
+                       fromViewController.view.layer.transform = [wSelf transformForRotationDegree:rotationDegree];
 
                      } completion:^(BOOL finished) {
     
                        toViewController.view.clipsToBounds = YES;
                        [transitionContext completeTransition:YES]; // notify the context we are done with the transition
+                       fromViewController.view.layer.transform = [wSelf transformForRotationDegree:0];
                        
                      }];
 
@@ -193,7 +219,7 @@
   fromViewController.view.layer.shadowPath = [[UIBezierPath
                                                bezierPathWithRect:shadowFrame] CGPath];
   fromViewController.view.layer.shadowOpacity = 0.8f;
- 
+   
 }
 
 - (void) updateInteractiveTransition:(CGFloat)percentComplete {
@@ -206,16 +232,15 @@
   CGRect fromFrame = CGRectOffset([[transitionContext containerView] bounds], 0, -CGRectGetHeight([[transitionContext containerView] bounds]) * (1.0f - percentComplete));
   CGRect outsideFrame = [transitionContext containerView].bounds;
   outsideFrame.origin.y += CGRectGetHeight(outsideFrame);
-  CGRect toFrame = CGRectOffset(outsideFrame, 0, -CGRectGetHeight([[transitionContext containerView] bounds]) * (1.0f - percentComplete));
+//  CGRect toFrame = CGRectOffset(outsideFrame, 0, -CGRectGetHeight([[transitionContext containerView] bounds]) * (1.0f - percentComplete));
   
   fromViewController.view.frame = fromFrame;
   
   // update the shadow offset
   fromViewController.view.layer.shadowOffset = CGSizeMake(0, 100 * percentComplete);
   
-  toViewController.view.frame = toFrame;
-  
-  CGFloat angle = percentComplete * 15;
+  CGFloat angle = percentComplete * rotationDegree;
+  [self setAnchorPoint:CGPointMake(0.5, 1.0) forView:toViewController.view];
   toViewController.view.layer.transform = [self transformForRotationDegree:angle];
 
 }
@@ -229,9 +254,6 @@
 
   CGRect frame = [transitionContext containerView].bounds;
   
-  CGRect toFrame = frame;
-  toFrame.origin.y += CGRectGetHeight(frame);
-
   // shadow animation
   CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
   anim.fromValue = [NSValue valueWithCGSize:fromViewController.view.layer.shadowOffset];
@@ -240,15 +262,18 @@
   [fromViewController.view.layer addAnimation:anim forKey:@"shadowOffset"];
   fromViewController.view.layer.shadowOffset = CGSizeMake(0, 100);
 
+  __weak FloatUpDeckTransitionInspector *wSelf = self;
   
   [UIView animateWithDuration:[self transitionDuration:transitionContext]
                    animations:^{
 
                      fromViewController.view.frame = frame;
-                     toViewController.view.frame = toFrame;
-                     
+                     toViewController.view.layer.transform = [wSelf transformForRotationDegree:rotationDegree];
+
                    } completion:^(BOOL finished) {
-                     
+
+                     toViewController.view.layer.transform = [wSelf transformForRotationDegree:0];
+
                      [transitionContext completeTransition:NO];
                      
                    }];
@@ -288,7 +313,6 @@
 
                      fromViewController.view.frame = fromFrame;
  
-                     toViewController.view.frame = frame;
                      toViewController.view.layer.transform = [wSelf transformForRotationDegree:0];
                      
                    } completion:^(BOOL finished) {
