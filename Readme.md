@@ -15,7 +15,7 @@ Besides, there are also couple Opensource resources you can refer to:
 <img src="http://f.cl.ly/items/1G1Q2q1n0O2b1L3C2b3U/Screen%20Shot%202014-01-09%20at%2012.56.26%20PM.png" width="300"/>
 
 ## Demo video
-http://youtu.be/F2CitsDTjmg
+http://youtu.be/w3zCtmRcFXY
 
 ## License
 MIT
