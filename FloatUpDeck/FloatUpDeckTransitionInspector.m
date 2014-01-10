@@ -20,7 +20,7 @@
 static const CGFloat rotationDegree = 20.0f;
 
 @implementation FloatUpDeckTransitionInspector {
-  CGFloat _currentShadowOpacity;
+  CGFloat _presentingPercentage;
 }
 
 - (id) initWithParentViewController:(UIViewController*)viewController childViewController:(UIViewController*)child {
@@ -242,6 +242,8 @@ static const CGFloat rotationDegree = 20.0f;
   CGFloat angle = percentComplete * rotationDegree;
   [self setAnchorPoint:CGPointMake(0.5, 1.0) forView:toViewController.view];
   toViewController.view.layer.transform = [self transformForRotationDegree:angle];
+  
+  _presentingPercentage = percentComplete;
 
 }
 
@@ -264,7 +266,7 @@ static const CGFloat rotationDegree = 20.0f;
 
   __weak FloatUpDeckTransitionInspector *wSelf = self;
   
-  [UIView animateWithDuration:[self transitionDuration:transitionContext]
+  [UIView animateWithDuration:[self transitionDuration:transitionContext] * _presentingPercentage
                    animations:^{
 
                      fromViewController.view.frame = frame;
@@ -308,7 +310,7 @@ static const CGFloat rotationDegree = 20.0f;
   fromViewController.view.layer.shadowOffset = CGSizeMake(0, 0);
   
   __weak FloatUpDeckTransitionInspector *wSelf = self;
-  [UIView animateWithDuration:[self transitionDuration:transitionContext]
+  [UIView animateWithDuration:[self transitionDuration:transitionContext] * _presentingPercentage
                    animations:^{
 
                      fromViewController.view.frame = fromFrame;
